@@ -5,8 +5,7 @@
  *
  * @doubly: head of the linked list
  * @cline: line number
- *
- * Return: void
+ * Return: no return
  */
 void _push(stack_t **doubly, unsigned int cline)
 {
@@ -40,12 +39,32 @@ void _push(stack_t **doubly, unsigned int cline)
 }
 
 /**
+ * _pall - prints all values on the stack
+ *
+ * @doubly: head of the linked list
+ * @cline: line numbers
+ * Return: no return
+ */
+void _pall(stack_t **doubly, unsigned int cline)
+{
+	stack_t *aux;
+	(void)cline;
+
+	aux = *doubly;
+
+	while (aux)
+	{
+		printf("%d\n", aux->n);
+		aux = aux->next;
+	}
+}
+
+/**
  * _pint - prints the value at the top of the stack
  *
  * @doubly: head of the linked list
  * @cline: line number
- *
- * Return: void
+ * Return: no return
  */
 void _pint(stack_t **doubly, unsigned int cline)
 {
@@ -63,25 +82,25 @@ void _pint(stack_t **doubly, unsigned int cline)
 }
 
 /**
- * _pall - prints all values on the stack
+ * _pop - removes the top element of the stack
  *
  * @doubly: head of the linked list
- * @cline: line numbers
- *
- * Return: void
+ * @cline: line number
+ * Return: no return
  */
-void _pall(stack_t **doubly, unsigned int cline)
+void _pop(stack_t **doubly, unsigned int cline)
 {
 	stack_t *aux;
-	(void)cline;
 
-	aux = *doubly;
-
-	while (aux)
+	if (doubly == NULL || *doubly == NULL)
 	{
-		printf("%d\n", aux->n);
-		aux = aux->next;
+		dprintf(2, "L%u: can't pop an empty stack\n", cline);
+		free_vglo();
+		exit(EXIT_FAILURE);
 	}
+	aux = *doubly;
+	*doubly = (*doubly)->next;
+	free(aux);
 }
 
 /**
@@ -89,8 +108,7 @@ void _pall(stack_t **doubly, unsigned int cline)
  *
  * @doubly: head of the linked list
  * @cline: line number
- *
- * Return: void
+ * Return: no return
  */
 void _swap(stack_t **doubly, unsigned int cline)
 {
@@ -115,27 +133,4 @@ void _swap(stack_t **doubly, unsigned int cline)
 	aux->prev = *doubly;
 	(*doubly)->next = aux;
 	(*doubly)->prev = NULL;
-}
-
-/**
- * _pop - removes the top element of the stack
- *
- * @doubly: head of the linked list
- * @cline: line number
- *
- * Return: void
- */
-void _pop(stack_t **doubly, unsigned int cline)
-{
-	stack_t *aux;
-
-	if (doubly == NULL || *doubly == NULL)
-	{
-		dprintf(2, "L%u: can't pop an empty stack\n", cline);
-		free_vglo();
-		exit(EXIT_FAILURE);
-	}
-	aux = *doubly;
-	*doubly = (*doubly)->next;
-	free(aux);
 }
